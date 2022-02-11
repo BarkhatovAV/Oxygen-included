@@ -1,13 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
-public class OxygenView : MonoBehaviour
+public class OxygenPercentageView : MonoBehaviour
 {
     [SerializeField] private Oxygen _oxygen;
-    [SerializeField] private Slider _slider;
+    [SerializeField] private TMP_Text _text;
 
     private void OnEnable()
     {
@@ -20,6 +17,6 @@ public class OxygenView : MonoBehaviour
     }
     private void OnOxygenCountChanged(float oxygenCount)
     {
-        _slider.value = oxygenCount;
+        _text.text = "%" + Mathf.RoundToInt(oxygenCount*100);
     }
 }

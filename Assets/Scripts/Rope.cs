@@ -1,19 +1,28 @@
 using Obi;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(ObiRope))]
+[RequireComponent(typeof(ObiPathSmoother))]
 public class Rope : MonoBehaviour
 {
-    [SerializeField] ObiRope _rope;
-    [SerializeField] ObiPathSmoother _obiPathSmoother;
-    [SerializeField] int _maxObiPathSmoother;
+    [SerializeField] private int _maxObiPathSmoother;
     [SerializeField] private float _duration;
 
+    private ObiRope _rope;
+    private ObiPathSmoother _obiPathSmoother;
+    private int _numberBreakingElement = 90;
     private bool _isBroken = false;
+
     public event UnityAction<float> StartBreaking;
     public event UnityAction Broken;
+
+    private void Start()
+    {
+        _rope = GetComponent<ObiRope>();
+        _obiPathSmoother = GetComponent<ObiPathSmoother>();
+    }
 
     private void FixedUpdate()
     {
@@ -31,7 +40,7 @@ public class Rope : MonoBehaviour
     private IEnumerator BreakeRope()
     {
         yield return new WaitForSeconds(_duration);
-        _rope.Tear(_rope.elements[70]);//Random.Range(0, _rope.elements.Count)]);
+        _rope.Tear(_rope.elements[_numberBreakingElement]);
         _rope.RebuildConstraintsFromElements();
         Broken?.Invoke();
     }
