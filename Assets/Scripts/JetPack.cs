@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public class JetPack : MonoBehaviour
 {
     [SerializeField] private FixedJoystick _joystick;
-    [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _force;
     [SerializeField] private float _offset;
     [SerializeField] private ParticleSystem[] _reactiveFlames;
 
@@ -19,7 +19,7 @@ public class JetPack : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rigidbody.AddForce(new Vector3(_joystick.Horizontal * _moveSpeed, _joystick.Vertical * _moveSpeed, 0));
+        _rigidbody.AddForce(new Vector3(_joystick.Horizontal * _force, _joystick.Vertical * _force, 0));
 
         if (_joystick.Horizontal != 0 || _joystick.Vertical != 0)
         {
